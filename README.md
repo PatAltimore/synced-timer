@@ -1,12 +1,12 @@
-# Synced Timer
+# Shared Countdown Timer
 
 Browser-based countdown timer with QR-code sharing. Open the app, set a duration, and share the synced countdown to any device via QR code or link.
 
-Try the deployed [Synced Timer](https://white-glacier-0ec07691e.2.azurestaticapps.net/) demo.
+Try the deployed [Shared Countdown Timer](https://white-glacier-0ec07691e.2.azurestaticapps.net/) demo.
 
-## How It Works
+## How it works
 
-All timer state lives in the URL:
+All timer state is passed in the URL:
 
 ```
 https://example.com/?s=1741718400&d=300
@@ -17,15 +17,15 @@ https://example.com/?s=1741718400&d=300
 | `s`   | Start time — Unix epoch seconds (UTC) |
 | `d`   | Duration — seconds |
 
-A device scanning the QR code (or opening the link) reads these params and counts down from the same absolute start time. No server, no websockets — clocks stay in sync because both devices reference the same UTC epoch.
+A device scanning the QR code or opening the link reads these parameters and counts down from the same absolute start time. No server or websockets required. The countdown stays in sync because all devices reference the same UTC epoch.
 
-### Why UTC Epoch?
+### UTC epoch
 
-UTC epoch (Unix time) is the number of seconds since January 1, 1970 00:00:00 UTC. It is the same for every device on Earth regardless of time zone. When a timer is started, the current epoch second and the chosen duration are encoded into the URL. Any device that opens the link computes the time remaining as `(start + duration) - now` — no server communication or real-time sync required.
+UTC epoch (Unix time) is the number of seconds since January 1, 1970 00:00:00 UTC. It is the same for every device on Earth regardless of time zone. When a timer is started, the current epoch second and the chosen duration are encoded into the URL. Any device that opens the link computes the time remaining as `(start + duration) - now`. Using UTC epoch ensures no server communication or real-time sync is required.
 
-This works because modern devices keep their clocks accurate via NTP (Network Time Protocol), typically within a fraction of a second. As long as device clocks are reasonably accurate, all viewers see the same countdown.
+This works because modern devices keep their clocks accurate via NTP (Network Time Protocol), typically within a fraction of a second. As long as device clocks are reasonably accurate, all viewers see the same countdown within a second or two of each other.
 
-## Quick Start
+## Quickstart
 
 ```bash
 npm install

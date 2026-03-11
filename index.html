@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Synced Timer</title>
+    <title>Shared countdown timer</title>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
     <main id="app">
       <section id="setup" class="view">
-        <h1>Synced Timer</h1>
+        <h1>Shared countdown timer</h1>
         <label for="duration-input">Duration (minutes)</label>
         <input id="duration-input" type="number" min="1" value="5" />
         <button id="start-btn">Start &amp; Share</button>
@@ -18,7 +18,8 @@
       <section id="timer" class="view" hidden>
         <div id="countdown">--:--</div>
         <div id="qr-container"></div>
-        <button id="copy-link-btn">Copy Link</button>
+        <p class="share-instructions">Copy and share the countdown link,</br>or scan the QR code on another device.</p>
+        <button id="copy-link-btn">Copy link</button>
         <button id="reset-btn">Reset</button>
       </section>
     </main>

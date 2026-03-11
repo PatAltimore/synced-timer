@@ -84,6 +84,10 @@ button:hover {
   border-radius: 0.5rem;
 }
 
+.share-instructions {
+  margin-bottom: 1.5rem;
+}
+
 .view[hidden] {
   display: none;
 }
