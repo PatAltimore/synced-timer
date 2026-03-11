@@ -25,6 +25,10 @@ function stepDuration(delta) {
 decrementBtn.addEventListener("click", () => stepDuration(-1));
 incrementBtn.addEventListener("click", () => stepDuration(1));
 
+durationInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") startBtn.click();
+});
+
 let audioCtx = null;
 
 function ensureAudioContext() {
