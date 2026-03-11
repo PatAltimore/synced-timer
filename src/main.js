@@ -115,19 +115,21 @@ function resetTimer() {
   history.replaceState(null, "", location.pathname);
 }
 
+// Handle starting a timer from the duration input.
+function handleStartFromInput() {
+  ensureAudioContext();
+  const minutes = Number(durationInput.value);
+  if (!minutes || minutes <= 0) return;
+  const durationSeconds = minutes * 60;
+  showTimer(nowEpoch(), durationSeconds);
+}
+
+startBtn.addEventListener("click", handleStartFromInput);
+
 // On load: if URL has timer params, go straight to countdown.
 const params = parseTimerParams(new URLSearchParams(location.search));
 if (params) {
   showTimer(params.start, params.duration);
-} else {
-  // Setup view — user picks duration in minutes, hits start.
-  startBtn.onclick = () => {
-    ensureAudioContext();
-    const minutes = Number(durationInput.value);
-    if (!minutes || minutes <= 0) return;
-    const durationSeconds = minutes * 60;
-    showTimer(nowEpoch(), durationSeconds);
-  };
 }
 
 // Reset button returns to setup view.

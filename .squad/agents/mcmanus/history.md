@@ -26,3 +26,8 @@
 ### 2026-03-11: Countdown font sizing
 - Enlarged the primary MM:SS countdown using `font-size: clamp(3rem, 18vw, 5.5rem)` so it reads clearly on phones while staying within the 400px layout.
 - Slightly tightened spacing around the timer to keep the QR block and controls comfortably in view on common mobile heights.
+
+### 2026-03-11: Start after reset from shared URL
+- **Root cause:** When the app loaded from a shared `?s=&d=` URL, we skipped wiring the `Start & Share` click handler because it was only attached in the "no params" branch.
+- After pressing **Reset**, the setup view reappeared but the button had no listener, so taps (especially on phones) were ignored.
+- **Fix:** Always attach a single `Start & Share` handler up front (via `addEventListener`) and keep URL-driven startup (`showTimer` when params exist) independent from that wiring.
