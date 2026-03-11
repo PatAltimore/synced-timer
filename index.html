@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Synced Timer</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main id="app">
+      <section id="setup" class="view">
+        <h1>Synced Timer</h1>
+        <label for="duration-input">Duration (seconds)</label>
+        <input id="duration-input" type="number" min="1" value="60" />
+        <button id="start-btn">Start &amp; Share</button>
+      </section>
+
+      <section id="timer" class="view" hidden>
+        <div id="countdown">--:--</div>
+        <div id="qr-container"></div>
+        <button id="copy-link-btn">Copy Link</button>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
