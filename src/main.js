@@ -8,12 +8,22 @@ const timerView = document.getElementById("timer");
 const countdown = document.getElementById("countdown");
 const qrContainer = document.getElementById("qr-container");
 const durationInput = document.getElementById("duration-input");
+const decrementBtn = document.getElementById("decrement-btn");
+const incrementBtn = document.getElementById("increment-btn");
 const startBtn = document.getElementById("start-btn");
 const copyBtn = document.getElementById("copy-link-btn");
 const resetBtn = document.getElementById("reset-btn");
 
 let tickFrameId = null;
 let hasFinished = false;
+
+function stepDuration(delta) {
+  const val = Math.max(1, (parseInt(durationInput.value, 10) || 1) + delta);
+  durationInput.value = val;
+}
+
+decrementBtn.addEventListener("click", () => stepDuration(-1));
+incrementBtn.addEventListener("click", () => stepDuration(1));
 
 let audioCtx = null;
 

@@ -11,7 +11,11 @@
       <section id="setup" class="view">
         <h1>Shared countdown timer</h1>
         <label for="duration-input">Duration (minutes)</label>
-        <input id="duration-input" type="number" min="1" value="5" />
+        <div class="duration-stepper">
+          <button id="decrement-btn" type="button" aria-label="Decrease duration">−</button>
+          <input id="duration-input" type="number" min="1" value="5" inputmode="numeric" />
+          <button id="increment-btn" type="button" aria-label="Increase duration">+</button>
+        </div>
         <button id="start-btn">Start &amp; Share</button>
       </section>
 
