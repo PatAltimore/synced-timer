@@ -1,8 +1,8 @@
-# Shared Countdown Timer
+# Shared countdown timer
 
 Browser-based countdown timer with QR-code sharing. Open the app, set a duration, and share the synced countdown to any device via QR code or link.
 
-Try the deployed [Shared Countdown Timer](https://white-glacier-0ec07691e.2.azurestaticapps.net/) demo.
+Try the [Shared countdown timer](https://white-glacier-0ec07691e.2.azurestaticapps.net/) demo site.
 
 ## How it works
 
