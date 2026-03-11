@@ -116,7 +116,7 @@ button:hover {
 }
 
 #countdown.timer-finished {
-  animation: timer-finished-flash 0.4s ease-in-out 4;
+  animation: timer-finished-flash 0.4s ease-in-out 20;
 }
 
 @keyframes timer-finished-flash {

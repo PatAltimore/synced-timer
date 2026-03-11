@@ -107,6 +107,7 @@ function showTimer(start, duration) {
 
 /** Stop the countdown and return to setup view. */
 function resetTimer() {
+  if (!confirm("Are you sure you want to reset the timer? The current countdown is lost and you can set a new timer by clicking OK. You need to share a new link.")) return;
   if (tickFrameId !== null) {
     cancelAnimationFrame(tickFrameId);
     tickFrameId = null;
