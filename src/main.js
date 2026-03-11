@@ -10,9 +10,52 @@ const qrContainer = document.getElementById("qr-container");
 const durationInput = document.getElementById("duration-input");
 const startBtn = document.getElementById("start-btn");
 const copyBtn = document.getElementById("copy-link-btn");
+const resetBtn = document.getElementById("reset-btn");
+
+let tickFrameId = null;
+let hasFinished = false;
+
+let audioCtx = null;
+
+function ensureAudioContext() {
+  if (audioCtx) {
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+    return;
+  }
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+  audioCtx = new AudioContextClass();
+}
+
+function playFinishSound() {
+  if (!audioCtx) return;
+  const duration = 0.3;
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = "sine";
+  osc.frequency.value = 880;
+
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(0.15, now + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  osc.stop(now + duration);
+}
+
 
 /** Switch to counting-down view for the given timer params. */
 function showTimer(start, duration) {
+  hasFinished = false;
+  countdown.classList.remove("timer-finished");
+  ensureAudioContext();
   setupView.hidden = true;
   timerView.hidden = false;
 
@@ -25,7 +68,17 @@ function showTimer(start, duration) {
   const tick = () => {
     const left = remaining(start, duration, nowEpoch());
     countdown.textContent = formatRemaining(left);
-    if (left > 0) requestAnimationFrame(tick);
+
+    if (left <= 0) {
+      if (!hasFinished) {
+        hasFinished = true;
+        countdown.classList.add("timer-finished");
+        playFinishSound();
+      }
+      return;
+    }
+
+    tickFrameId = requestAnimationFrame(tick);
   };
   tick();
 
@@ -36,15 +89,36 @@ function showTimer(start, duration) {
   };
 }
 
+/** Stop the countdown and return to setup view. */
+function resetTimer() {
+  if (tickFrameId !== null) {
+    cancelAnimationFrame(tickFrameId);
+    tickFrameId = null;
+  }
+  hasFinished = false;
+  countdown.classList.remove("timer-finished");
+  timerView.hidden = true;
+  setupView.hidden = false;
+  qrContainer.innerHTML = "";
+  countdown.textContent = "--:--";
+  copyBtn.textContent = "Copy Link";
+  history.replaceState(null, "", location.pathname);
+}
+
 // On load: if URL has timer params, go straight to countdown.
 const params = parseTimerParams(new URLSearchParams(location.search));
 if (params) {
   showTimer(params.start, params.duration);
 } else {
-  // Setup view — user picks duration, hits start.
+  // Setup view — user picks duration in minutes, hits start.
   startBtn.onclick = () => {
-    const d = Number(durationInput.value);
-    if (!d || d <= 0) return;
-    showTimer(nowEpoch(), d);
+    ensureAudioContext();
+    const minutes = Number(durationInput.value);
+    if (!minutes || minutes <= 0) return;
+    const durationSeconds = minutes * 60;
+    showTimer(nowEpoch(), durationSeconds);
   };
 }
+
+// Reset button returns to setup view.
+resetBtn.onclick = resetTimer;

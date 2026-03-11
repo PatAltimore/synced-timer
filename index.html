@@ -10,8 +10,8 @@
     <main id="app">
       <section id="setup" class="view">
         <h1>Synced Timer</h1>
-        <label for="duration-input">Duration (seconds)</label>
-        <input id="duration-input" type="number" min="1" value="60" />
+        <label for="duration-input">Duration (minutes)</label>
+        <input id="duration-input" type="number" min="1" value="5" />
         <button id="start-btn">Start &amp; Share</button>
       </section>
 
@@ -19,6 +19,7 @@
         <div id="countdown">--:--</div>
         <div id="qr-container"></div>
         <button id="copy-link-btn">Copy Link</button>
+        <button id="reset-btn">Reset</button>
       </section>
     </main>
     <script type="module" src="/src/main.js"></script>
