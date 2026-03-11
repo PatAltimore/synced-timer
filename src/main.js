@@ -29,6 +29,8 @@ durationInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") startBtn.click();
 });
 
+durationInput.select();
+
 let audioCtx = null;
 
 function ensureAudioContext() {
@@ -117,6 +119,7 @@ function resetTimer() {
   countdown.textContent = "--:--";
   copyBtn.textContent = "Copy Link";
   history.replaceState(null, "", location.pathname);
+  durationInput.select();
 }
 
 // Handle starting a timer from the duration input.
